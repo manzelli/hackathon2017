@@ -8,6 +8,7 @@ import pickle
 def main():
 	num_clusters = 3
 	
+	# open hashes of pcaps
 	with open('normal_hashes.obj', 'rb') as fHandler:
 		normal_hashes = pickle.load(fHandler)
 	
@@ -17,6 +18,7 @@ def main():
 
 	train_vecs = np.concatenate((normal_hashes, malware_hashes), axis=0)
 
+	# train model
 	print("starting training")
 	cents, asmnts = TFKMeansCluster(train_vecs, num_clusters)
 	
@@ -33,6 +35,8 @@ def main():
 			 
  
 def TFKMeansCluster(vectors, noofclusters):
+	# CREDIT TO SACHIN JOGLEKAR 
+	# https://codesachin.wordpress.com/2015/11/14/k-means-clustering-with-tensorflow/
 	"""
 	K-Means Clustering using TensorFlow.
 	'vectors' should be a n*k 2-D NumPy array, where n is the number
